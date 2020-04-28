@@ -11,7 +11,7 @@ ec2 = boto3.resource('ec2')
 
 def lambda_handler(event, context):
     # Use the filter() method of the instances collection to retrieve
-    # all running EC2 instances.
+    # all stopped EC2 instances.
     filters = [{
             'Name': 'tag:AutoOnOff',
             'Values': ['true']

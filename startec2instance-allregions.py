@@ -11,14 +11,14 @@ ec2 = boto3.resource('ec2')
 
 def lambda_handler(event, context):
     # Use the filter() method of the instances collection to retrieve
-    # all running EC2 instances.
+    # all stopped EC2 instances.
     filters = [{
             'Name': 'tag:turn-off',
             'Values': ['true']
         },
         {
             'Name': 'instance-state-name', 
-            'Values': ['running']
+            'Values': ['stopped']
         }
     ]
     
@@ -34,13 +34,13 @@ def lambda_handler(event, context):
         instances = ec2.instances.filter(Filters=filters)
     
         #locate all running instances
-        RunningInstances = [instance.id for instance in instances]
+        StoppedInstances = [instance.id for instance in instances]
         
         #print the instances for logging purposes
-        #print RunningInstances 
+        #print StoppedInstances 
         
         #make sure there are actually instances to stop. 
-        for i in RunningInstances:
-            #perform the shutdown
-            shuttingDown = ec2.instances.filter(InstanceIds=RunningInstances).stop()
-            print (shuttingDown)
+        for i in StoppedInstances:
+            #perform the startup
+            startingUp = ec2.instances.filter(InstanceIds=StoppedInstances).start()
+            print (startingUp)

@@ -33,7 +33,7 @@ def lambda_handler(event, context):
     
     #make sure there are actually instances to stop. 
     if len(RunningInstances) > 0:
-        #perform the stopup
+        #perform the shutdown
         shuttingDown = ec2.instances.filter(InstanceIds=RunningInstances).stop()
         print (shuttingDown)
     else:
